@@ -24,12 +24,20 @@
 
 package com.github.justhm228.unchecked.io;
 
+import java.util.function.Consumer;
+import java.io.IOException;
+
 public final class UncheckedIO {
 
     private UncheckedIO() throws UnsupportedOperationException {
 
         super();
         throw new UnsupportedOperationException("No instances for you!");
+    }
+
+    public static void uncheckedIO(final IORunnable function, final Consumer<IOException> handler) {
+
+        function.asRunnable(handler).run();
     }
 
     public static void uncheckedIO(final IORunnable function) {
