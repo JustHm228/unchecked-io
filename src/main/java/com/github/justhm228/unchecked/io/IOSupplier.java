@@ -27,7 +27,7 @@ package com.github.justhm228.unchecked.io;
 import java.io.IOException;
 import java.io.UncheckedIOException;
 import java.util.function.Supplier;
-import java.util.function.Consumer;
+import java.util.function.Function;
 
 @FunctionalInterface()
 public interface IOSupplier<T> {
@@ -49,7 +49,7 @@ public interface IOSupplier<T> {
 
     T get() throws IOException;
 
-    default Supplier<T> asSupplier(final Consumer<IOException> handler) {
+    default Supplier<T> asSupplier(final Function<IOException, T> handler) {
 
         return () -> {
 
@@ -59,7 +59,7 @@ public interface IOSupplier<T> {
 
             } catch (final IOException io) {
 
-                handler.accept(io);
+                return handler.apply(io);
             }
         };
     }
