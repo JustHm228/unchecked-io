@@ -25,9 +25,25 @@
 package com.github.justhm228.unchecked.io;
 
 import java.io.IOException;
+import java.io.UncheckedIOException;
 
 @FunctionalInterface()
 public interface IORunnable {
+
+    static IORunnable asIORunnable(final Runnable function) {
+
+        return () -> {
+
+            try {
+
+                function.run();
+
+            } catch (final UncheckedIOException unchecked) {
+
+                throw unchecked.getCause();
+            }
+        };
+    }
 
     void run() throws IOException;
 }
