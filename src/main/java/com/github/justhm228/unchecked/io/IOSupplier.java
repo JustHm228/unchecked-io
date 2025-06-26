@@ -25,9 +25,26 @@
 package com.github.justhm228.unchecked.io;
 
 import java.io.IOException;
+import java.io.UncheckedIOException;
+import java.util.function.Supplier;
 
 @FunctionalInterface()
 public interface IOSupplier<T> {
+
+    static <T> IOSupplier<T> asIOSupplier(final Supplier<T> function) {
+
+        return () -> {
+
+            try {
+
+                return function.get();
+
+            } catch (final UncheckedIOException unchecked) {
+
+                throw unchecked.getCause();
+            }
+        };
+    }
 
     T get() throws IOException;
 }
