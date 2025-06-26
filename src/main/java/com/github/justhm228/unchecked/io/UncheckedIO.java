@@ -51,4 +51,9 @@ public final class UncheckedIO {
 
         function.asRunnable().run();
     }
+
+    public static <T> T uncheckedIO(final IOSupplier<T> function) throws UncheckedIOException {
+
+        return function.asSupplier().get();
+    }
 }
