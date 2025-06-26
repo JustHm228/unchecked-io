@@ -37,9 +37,9 @@ public final class UncheckedIO {
         throw new UnsupportedOperationException("No instances for you!");
     }
 
-    public static <E extends RuntimeException> void uncheckedIO(final IORunnable function, final Function<IOException, E> transformer) throws E {
+    public static <E extends RuntimeException> void uncheckedIO(final IORunnable function, final Function<IOException, E> exceptionTransformer) throws E {
 
-        function.asRunnable(transformer).run();
+        function.asRunnable(exceptionTransformer).run();
     }
 
     public static void uncheckedIO(final IORunnable function, final Consumer<IOException> exceptionHandler) {
