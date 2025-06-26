@@ -81,7 +81,7 @@ public interface IORunnable {
         });
     }
 
-    default Runnable asRunnable(final Consumer<IOException> handler) {
+    default Runnable asRunnable(final Consumer<IOException> exceptionHandler) {
 
         return () -> {
 
@@ -91,7 +91,7 @@ public interface IORunnable {
 
             } catch (final IOException io) {
 
-                handler.accept(io);
+                exceptionHandler.accept(io);
             }
         };
     }

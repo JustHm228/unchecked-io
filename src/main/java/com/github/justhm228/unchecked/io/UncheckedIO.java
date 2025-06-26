@@ -42,9 +42,9 @@ public final class UncheckedIO {
         function.asRunnable(transformer).run();
     }
 
-    public static void uncheckedIO(final IORunnable function, final Consumer<IOException> handler) {
+    public static void uncheckedIO(final IORunnable function, final Consumer<IOException> exceptionHandler) {
 
-        function.asRunnable(handler).run();
+        function.asRunnable(exceptionHandler).run();
     }
 
     public static void uncheckedIO(final IORunnable function) throws UncheckedIOException {
@@ -52,9 +52,9 @@ public final class UncheckedIO {
         function.asRunnable().run();
     }
 
-    public static <T> T uncheckedIO(final IOSupplier<T> function, final Function<IOException, T> handler) {
+    public static <T> T uncheckedIO(final IOSupplier<T> function, final Function<IOException, T> exceptionHandler) {
 
-        return function.asSupplier(handler).get();
+        return function.asSupplier(exceptionHandler).get();
     }
 
     public static <T> T uncheckedIO(final IOSupplier<T> function) throws UncheckedIOException {

@@ -74,7 +74,7 @@ public interface IOSupplier<T> {
 
     T get() throws IOException;
 
-    default Supplier<T> asSupplier(final Function<IOException, T> handler) {
+    default Supplier<T> asSupplier(final Function<IOException, T> exceptionHandler) {
 
         return () -> {
 
@@ -84,7 +84,7 @@ public interface IOSupplier<T> {
 
             } catch (final IOException io) {
 
-                return handler.apply(io);
+                return exceptionHandler.apply(io);
             }
         };
     }
