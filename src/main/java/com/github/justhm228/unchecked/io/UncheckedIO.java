@@ -37,12 +37,12 @@ public final class UncheckedIO {
         throw new UnsupportedOperationException("No instances for you!");
     }
 
-    public static <E extends RuntimeException> void uncheckedIO(final IORunnable function, final Function<IOException, E> exceptionTransformer) throws E {
+    public static <E extends RuntimeException> void uncheckedIO(final IORunnable function, final Function<? super IOException, ? extends E> exceptionTransformer) throws E {
 
         function.asRunnable(exceptionTransformer).run();
     }
 
-    public static void uncheckedIO(final IORunnable function, final Consumer<IOException> exceptionHandler) {
+    public static void uncheckedIO(final IORunnable function, final Consumer<? super IOException> exceptionHandler) {
 
         function.asRunnable(exceptionHandler).run();
     }
@@ -52,7 +52,7 @@ public final class UncheckedIO {
         function.asRunnable().run();
     }
 
-    public static <T> T uncheckedIO(final IOSupplier<T> function, final Function<IOException, T> exceptionHandler) {
+    public static <T> T uncheckedIO(final IOSupplier<T> function, final Function<? super IOException, ? extends T> exceptionHandler) {
 
         return function.asSupplier(exceptionHandler).get();
     }

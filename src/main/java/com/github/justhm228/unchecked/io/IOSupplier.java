@@ -74,7 +74,7 @@ public interface IOSupplier<T> {
 
     T get() throws IOException;
 
-    default Supplier<T> asSupplier(final Function<IOException, T> exceptionHandler) {
+    default Supplier<T> asSupplier(final Function<? super IOException, ? extends T> exceptionHandler) {
 
         return () -> {
 
