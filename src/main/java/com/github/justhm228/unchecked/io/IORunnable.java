@@ -73,7 +73,7 @@ public interface IORunnable {
 
     void run() throws IOException;
 
-    default <E extends RuntimeException> Runnable asRunnable(final Function<IOException, E> exceptionTransformer) {
+    default Runnable asRunnable(final Function<IOException, ? extends RuntimeException> exceptionTransformer) {
 
         return asRunnable((Consumer<IOException>) (io) -> {
 
