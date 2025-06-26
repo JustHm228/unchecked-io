@@ -26,6 +26,7 @@ package com.github.justhm228.unchecked.io;
 
 import java.io.IOException;
 import java.io.UncheckedIOException;
+import java.util.function.Function;
 import java.util.function.Consumer;
 
 @FunctionalInterface()
@@ -47,6 +48,14 @@ public interface IORunnable {
     }
 
     void run() throws IOException;
+
+    default <E extends RuntimeException> Runnable asRunnable(final Function<IOException, E> transformer) {
+
+        return asRunnable((Consumer<IOException>) (io) -> {
+
+            throw transformer.apply(io);
+        });
+    }
 
     default Runnable asRunnable(final Consumer<IOException> handler) {
 

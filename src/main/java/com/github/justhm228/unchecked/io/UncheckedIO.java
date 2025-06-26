@@ -24,6 +24,7 @@
 
 package com.github.justhm228.unchecked.io;
 
+import java.util.function.Function;
 import java.util.function.Consumer;
 import java.io.IOException;
 
@@ -33,6 +34,11 @@ public final class UncheckedIO {
 
         super();
         throw new UnsupportedOperationException("No instances for you!");
+    }
+
+    public static <E extends RuntimeException> void uncheckedIO(final IORunnable function, final Function<IOException, E> transformer) throws E {
+
+        function.asRunnable(transformer).run();
     }
 
     public static void uncheckedIO(final IORunnable function, final Consumer<IOException> handler) {
