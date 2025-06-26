@@ -52,6 +52,11 @@ public final class UncheckedIO {
         function.asRunnable().run();
     }
 
+    public static <T> T uncheckedIO(final IOSupplier<T> function, final Consumer<IOException> handler) {
+
+        return function.asSupplier(handler).get();
+    }
+
     public static <T> T uncheckedIO(final IOSupplier<T> function) throws UncheckedIOException {
 
         return function.asSupplier().get();
