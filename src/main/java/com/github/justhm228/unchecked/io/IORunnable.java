@@ -28,6 +28,7 @@ import java.io.IOException;
 import java.io.UncheckedIOException;
 import java.util.function.Function;
 import java.util.function.Consumer;
+import java.util.function.Supplier;
 
 @FunctionalInterface()
 public interface IORunnable {
@@ -60,6 +61,29 @@ public interface IORunnable {
                 throw unchecked.getCause();
             }
         };
+    }
+
+    static IORunnable failingWith(final Supplier<? extends IOException> exceptionFactory) {
+
+        return () -> {
+
+            final IOException exception = exceptionFactory.get();
+
+            if (exception != null) {
+
+                throw exception;
+            }
+        };
+    }
+
+    static IORunnable failingWith(final String msg) {
+
+        return failingWith(() -> new IOException(msg));
+    }
+
+    static IORunnable failingWith() {
+
+        return failingWith(IOException::new);
     }
 
     void run() throws IOException;

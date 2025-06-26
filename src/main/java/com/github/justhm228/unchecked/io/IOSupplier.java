@@ -47,6 +47,31 @@ public interface IOSupplier<T> {
         };
     }
 
+    static <T> IOSupplier<T> failingWith(final Supplier<? extends IOException> exceptionFactory) {
+
+        return () -> {
+
+            final IOException exception = exceptionFactory.get();
+
+            if (exception != null) {
+
+                throw exception;
+            }
+
+            return null;
+        };
+    }
+
+    static <T> IOSupplier<T> failingWith(final String msg) {
+
+        return failingWith(() -> new IOException(msg));
+    }
+
+    static <T> IOSupplier<T> failingWith() {
+
+        return failingWith(IOException::new);
+    }
+
     T get() throws IOException;
 
     default Supplier<T> asSupplier(final Function<IOException, T> handler) {
