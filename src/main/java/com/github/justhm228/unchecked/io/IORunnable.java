@@ -46,4 +46,19 @@ public interface IORunnable {
     }
 
     void run() throws IOException;
+
+    default Runnable asRunnable() {
+
+        return () -> {
+
+            try {
+
+                run();
+
+            } catch (final IOException io) {
+
+                throw new UncheckedIOException(io);
+            }
+        };
+    }
 }
