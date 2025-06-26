@@ -66,16 +66,9 @@ public interface IOSupplier<T> {
 
     default Supplier<T> asSupplier() {
 
-        return () -> {
+        return asSupplier((io) -> {
 
-            try {
-
-                return get();
-
-            } catch (final IOException io) {
-
-                throw new UncheckedIOException(io);
-            }
-        };
+            throw new UncheckedIOException(io);
+        });
     }
 }
