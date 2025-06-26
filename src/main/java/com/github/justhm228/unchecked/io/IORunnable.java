@@ -33,21 +33,6 @@ import java.util.function.Supplier;
 @FunctionalInterface()
 public interface IORunnable {
 
-    static IORunnable asIORunnable(final Runnable function, final Consumer<IOException> handler) {
-
-        return () -> {
-
-            try {
-
-                function.run();
-
-            } catch (final UncheckedIOException unchecked) {
-
-                handler.accept(unchecked.getCause());
-            }
-        };
-    }
-
     static IORunnable asIORunnable(final Runnable function) {
 
         return () -> {
