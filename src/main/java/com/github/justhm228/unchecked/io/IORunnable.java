@@ -74,16 +74,6 @@ public interface IORunnable {
 
     default Runnable asRunnable() {
 
-        return () -> {
-
-            try {
-
-                run();
-
-            } catch (final IOException io) {
-
-                throw new UncheckedIOException(io);
-            }
-        };
+        return asRunnable((Function<IOException, UncheckedIOException>) UncheckedIOException::new);
     }
 }
