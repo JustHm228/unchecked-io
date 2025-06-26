@@ -28,6 +28,7 @@ import java.util.function.Function;
 import java.util.function.Consumer;
 import java.io.IOException;
 import java.io.UncheckedIOException;
+import static java.util.Objects.requireNonNull;
 
 public final class UncheckedIO {
 
@@ -37,28 +38,33 @@ public final class UncheckedIO {
         throw new UnsupportedOperationException("No instances for you!");
     }
 
-    public static <E extends RuntimeException> void uncheckedIO(final IORunnable function, final Function<? super IOException, ? extends E> exceptionTransformer) throws E {
+    public static <E extends RuntimeException> void uncheckedIO(final IORunnable function, final Function<? super IOException, ? extends E> exceptionTransformer) throws NullPointerException, E {
 
+        requireNonNull(function);
         function.asRunnable(exceptionTransformer).run();
     }
 
-    public static void uncheckedIO(final IORunnable function, final Consumer<? super IOException> exceptionHandler) {
+    public static void uncheckedIO(final IORunnable function, final Consumer<? super IOException> exceptionHandler) throws NullPointerException {
 
+        requireNonNull(function);
         function.asRunnable(exceptionHandler).run();
     }
 
-    public static void uncheckedIO(final IORunnable function) throws UncheckedIOException {
+    public static void uncheckedIO(final IORunnable function) throws NullPointerException, UncheckedIOException {
 
+        requireNonNull(function);
         function.asRunnable().run();
     }
 
-    public static <T> T uncheckedIO(final IOSupplier<T> function, final Function<? super IOException, ? extends T> exceptionHandler) {
+    public static <T> T uncheckedIO(final IOSupplier<T> function, final Function<? super IOException, ? extends T> exceptionHandler) throws NullPointerException {
 
+        requireNonNull(function);
         return function.asSupplier(exceptionHandler).get();
     }
 
-    public static <T> T uncheckedIO(final IOSupplier<T> function) throws UncheckedIOException {
+    public static <T> T uncheckedIO(final IOSupplier<T> function) throws NullPointerException, UncheckedIOException {
 
+        requireNonNull(function);
         return function.asSupplier().get();
     }
 }

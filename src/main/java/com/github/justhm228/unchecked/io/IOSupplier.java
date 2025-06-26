@@ -28,11 +28,14 @@ import java.io.IOException;
 import java.io.UncheckedIOException;
 import java.util.function.Supplier;
 import java.util.function.Function;
+import static java.util.Objects.requireNonNull;
 
 @FunctionalInterface()
 public interface IOSupplier<T> {
 
-    static <T> IOSupplier<T> asIOSupplier(final Supplier<T> function) {
+    static <T> IOSupplier<T> asIOSupplier(final Supplier<T> function) throws NullPointerException {
+
+        requireNonNull(function);
 
         return () -> {
 
@@ -47,7 +50,9 @@ public interface IOSupplier<T> {
         };
     }
 
-    static <T> IOSupplier<T> failingWith(final Supplier<? extends IOException> exceptionFactory) {
+    static <T> IOSupplier<T> failingWith(final Supplier<? extends IOException> exceptionFactory) throws NullPointerException {
+
+        requireNonNull(exceptionFactory);
 
         return () -> {
 
@@ -74,7 +79,9 @@ public interface IOSupplier<T> {
 
     T get() throws IOException;
 
-    default Supplier<T> asSupplier(final Function<? super IOException, ? extends T> exceptionHandler) {
+    default Supplier<T> asSupplier(final Function<? super IOException, ? extends T> exceptionHandler) throws NullPointerException {
+
+        requireNonNull(exceptionHandler);
 
         return () -> {
 

@@ -29,11 +29,14 @@ import java.io.UncheckedIOException;
 import java.util.function.Function;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
+import static java.util.Objects.requireNonNull;
 
 @FunctionalInterface()
 public interface IORunnable {
 
-    static IORunnable asIORunnable(final Runnable function) {
+    static IORunnable asIORunnable(final Runnable function) throws NullPointerException {
+
+        requireNonNull(function);
 
         return () -> {
 
@@ -48,7 +51,9 @@ public interface IORunnable {
         };
     }
 
-    static IORunnable failingWith(final Supplier<? extends IOException> exceptionFactory) {
+    static IORunnable failingWith(final Supplier<? extends IOException> exceptionFactory) throws NullPointerException {
+
+        requireNonNull(exceptionFactory);
 
         return () -> {
 
@@ -73,7 +78,9 @@ public interface IORunnable {
 
     void run() throws IOException;
 
-    default Runnable asRunnable(final Function<? super IOException, ? extends RuntimeException> exceptionTransformer) {
+    default Runnable asRunnable(final Function<? super IOException, ? extends RuntimeException> exceptionTransformer) throws NullPointerException {
+
+        requireNonNull(exceptionTransformer);
 
         return asRunnable((Consumer<IOException>) (io) -> {
 
@@ -81,7 +88,9 @@ public interface IORunnable {
         });
     }
 
-    default Runnable asRunnable(final Consumer<? super IOException> exceptionHandler) {
+    default Runnable asRunnable(final Consumer<? super IOException> exceptionHandler) throws NullPointerException {
+
+        requireNonNull(exceptionHandler);
 
         return () -> {
 
