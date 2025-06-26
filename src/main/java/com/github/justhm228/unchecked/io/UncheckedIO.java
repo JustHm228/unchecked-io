@@ -27,6 +27,7 @@ package com.github.justhm228.unchecked.io;
 import java.util.function.Function;
 import java.util.function.Consumer;
 import java.io.IOException;
+import java.io.UncheckedIOException;
 
 public final class UncheckedIO {
 
@@ -46,7 +47,7 @@ public final class UncheckedIO {
         function.asRunnable(handler).run();
     }
 
-    public static void uncheckedIO(final IORunnable function) {
+    public static void uncheckedIO(final IORunnable function) throws UncheckedIOException {
 
         function.asRunnable().run();
     }
