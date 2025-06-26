@@ -38,12 +38,6 @@ public final class UncheckedIO {
         throw new UnsupportedOperationException("No instances for you!");
     }
 
-    public static <E extends RuntimeException> void uncheckedIO(final IORunnable function, final Function<? super IOException, ? extends E> exceptionTransformer) throws NullPointerException, E {
-
-        requireNonNull(function);
-        function.asRunnable(exceptionTransformer).run();
-    }
-
     public static void uncheckedIO(final IORunnable function, final Consumer<? super IOException> exceptionHandler) throws NullPointerException {
 
         requireNonNull(function);
