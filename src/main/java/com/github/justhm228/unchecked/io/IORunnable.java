@@ -138,6 +138,7 @@ public interface IORunnable {
 
             } catch (final UncheckedIOException unchecked) {
 
+                // Unwrap thrown UncheckedIOExceptions:
                 throw unchecked.getCause();
             }
         };
@@ -181,6 +182,7 @@ public interface IORunnable {
 
             final IOException exception = exceptionFactory.get();
 
+            // Note: See @implNote tag in javadoc for proper explanation.
             if (exception != null) {
 
                 throw exception;
@@ -255,6 +257,9 @@ public interface IORunnable {
 
         return asRunnable((Consumer<IOException>) (io) -> {
 
+            // `exceptionTransformer` usually simply wraps received IOException to
+            // some kind of unchecked exception.
+            // The resulting unchecked exception is thrown here:
             throw exceptionTransformer.apply(io);
         });
     }
@@ -284,8 +289,10 @@ public interface IORunnable {
 
                 run();
 
-            } catch (final IOException io) {
+            } catch (final IOException io) { // Thrown IOExceptions are handled with `exceptionHandler`
 
+                // Note: `exceptionHandler` could still throw any kind of unchecked exceptions.
+                //       This feature is used to implement asRunnable(Function)
                 exceptionHandler.accept(io);
             }
         };
