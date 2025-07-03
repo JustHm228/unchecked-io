@@ -293,6 +293,7 @@ public interface IORunnable {
 
                 // Note: `exceptionHandler` could still throw any kind of unchecked exceptions.
                 //       This feature is used to implement asRunnable(Function)
+                // TODO 03.07.2025: Maybe it should be mentioned in javadoc?
                 exceptionHandler.accept(io);
             }
         };
