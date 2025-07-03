@@ -128,7 +128,7 @@ public interface IORunnable {
      */
     static IORunnable asIORunnable(final Runnable function) throws NullPointerException {
 
-        requireNonNull(function);
+        requireNonNull(function, "The provided function is null.");
 
         return () -> {
 
@@ -175,7 +175,7 @@ public interface IORunnable {
      */
     static IORunnable failingWith(final Supplier<? extends IOException> exceptionFactory) throws NullPointerException {
 
-        requireNonNull(exceptionFactory);
+        requireNonNull(exceptionFactory, "The provided exception factory function is null.");
 
         return () -> {
 
@@ -251,7 +251,7 @@ public interface IORunnable {
      */
     default Runnable asRunnable(final Function<? super IOException, ? extends RuntimeException> exceptionTransformer) throws NullPointerException {
 
-        requireNonNull(exceptionTransformer);
+        requireNonNull(exceptionTransformer, "The provided exception transformer function is null.");
 
         return asRunnable((Consumer<IOException>) (io) -> {
 
@@ -276,7 +276,7 @@ public interface IORunnable {
      */
     default Runnable asRunnable(final Consumer<? super IOException> exceptionHandler) throws NullPointerException {
 
-        requireNonNull(exceptionHandler);
+        requireNonNull(exceptionHandler, "The provided exception handler function is null.");
 
         return () -> {
 
