@@ -54,8 +54,8 @@ import static java.util.Objects.requireNonNull;
  *     }</pre>
  * </p>
  * <p>
- *     {@link UncheckedIO} can also be used if you, for some reason, do not want to bother
- *     handling checked {@link IOException}s in your code.
+ *     {@link UncheckedIO} can also be used if you do not want to implicitly handle checked
+ *     {@link IOException}s in your code.
  *     <pre>{@code
  *     Path filepath = ...
  *     UncheckedIO.uncheckedIO(() -> Files.createFile(filepath)); // Creates file with no need to handle IOException
